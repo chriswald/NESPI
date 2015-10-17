@@ -5,7 +5,7 @@
 
 #define LATCH1 4
 #define CLK1   17
-#define DATA1  27
+#define DATA1  21 //27
 
 #define CTRL_A      0
 #define CTRL_B      1

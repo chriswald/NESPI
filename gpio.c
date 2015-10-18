@@ -11,10 +11,10 @@ int main()
 
    while (true)
    {
-      uint8_t old = CTRL[PLAYER_0];
+      uint8_t old = CTRL[PLAYER_0].buttons;
       getControllerState(PLAYER_0);
       
-      if (old & 1 == 0 && CTRL[PLAYER_0] & 1 == 1)
+      if (old & 1 == 0 && CTRL[PLAYER_0].buttons & 1 == 1)
 	 printf("Pressed A");
    }
 

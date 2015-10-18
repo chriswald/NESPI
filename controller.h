@@ -1,3 +1,6 @@
+#ifndef __CONTROLLER_H__
+#define __CONTROLLER_H__
+
 #include <stdint.h>
 
 #define CTRL_A      0
@@ -22,3 +25,5 @@ extern Controller CTRL[2];
 
 void initControllers();
 void getControllerState(uint8_t player);
+
+#endif // __CONTROLLER_H__

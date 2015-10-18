@@ -2,7 +2,11 @@
 #include "pins.h"
 #include <wiringPi.h>
 
+#define US_DELAY 6
+
 Controller CTRL[2];
+
+void pulsePin(uint8_t pin);
 
 void initControllers()
 {
@@ -39,4 +43,11 @@ void getControllerState(uint8_t player)
     CTRL[player].buttons |= digitalRead(CTRL[player].DATA) << CTRL_LEFT;
     pulsePin(CTRL[player].CLK);
     CTRL[player].buttons |= digitalRead(CTRL[player].DATA) << CTRL_RIGHT;
+}
+
+void pulsePin(uint8_t pin)
+{
+   digitalWrite(pin, HIGH);
+   delayMicroseconds(US_DELAY);
+   digitalWrite(pin, LOW);
 }

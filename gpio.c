@@ -23,7 +23,7 @@ void getControllerState(uint8_t ctrl);
 
 int main()
 {
-   wiringPiSetupGpio();
+   wiringPiSetup();
 
    pinMode(LATCH(1), OUTPUT);
    pinMode(CLK(1),   OUTPUT);

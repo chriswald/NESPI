@@ -3,9 +3,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#define LATCH1 4
-#define CLK1   17
-#define DATA1  21 //27
+#include "pins.h"
 
 #define CTRL_A      0
 #define CTRL_B      1
@@ -18,29 +16,28 @@
 
 #define US_DELAY 6
 
-uint8_t CTRL1, CTRL2;
+uint8_t CTRL[2];
 
 void pulsePin(uint8_t pin);
+void getControllerState(uint8_t ctrl);
 
 int main()
 {
    wiringPiSetupGpio();
 
-   pinMode(LATCH1, OUTPUT);
-   pinMode(CLK1,   OUTPUT);
-   pinMode(DATA1,  INPUT);
+   pinMode(LATCH(1), OUTPUT);
+   pinMode(CLK(1),   OUTPUT);
+   pinMode(DATA(1),  INPUT);
 
-   digitalWrite(LATCH1, LOW);
-   digitalWrite(CLK1,   LOW);
+   digitalWrite(LATCH(1), LOW);
+   digitalWrite(CLK(1),   LOW);
 
    while (true)
    {
-      uint8_t old = CTRL1;
-      CTRL1 = 0;
-      pulsePin(LATCH1);
-      CTRL1 |= digitalRead(DATA1) << CTRL_A;
+      uint8_t old = CTRL[1];
+      getControllerState(1);
       
-      if (old == 0 && CTRL1 == 1)
+      if (old & 1 == 0 && CTRL[1] & 1 == 1)
 	 printf("Pressed A");
    }
 
@@ -52,4 +49,25 @@ void pulsePin(uint8_t pin)
    digitalWrite(pin, HIGH);
    delayMicroseconds(US_DELAY);
    digitalWrite(pin, LOW);
+}
+
+void getControllerState(uint8_t num)
+{
+    CTRL[num] = 0;
+    pulsePin(LATCH(num));
+    CTRL[num] |= digitalRead(DATA(num)) << CTRL_A;
+    pulsePIn(CLK(num));
+    CTRL[num] |= digitalRead(DATA(num)) << CTRL_B;
+    pulsePIn(CLK(num));
+    CTRL[num] |= digitalRead(DATA(num)) << CTRL_SELECT;
+    pulsePIn(CLK(num));
+    CTRL[num] |= digitalRead(DATA(num)) << CTRL_START;
+    pulsePIn(CLK(num));
+    CTRL[num] |= digitalRead(DATA(num)) << CTRL_UP;
+    pulsePIn(CLK(num));
+    CTRL[num] |= digitalRead(DATA(num)) << CTRL_DOWN;
+    pulsePIn(CLK(num));
+    CTRL[num] |= digitalRead(DATA(num)) << CTRL_LEFT;
+    pulsePIn(CLK(num));
+    CTRL[num] |= digitalRead(DATA(num)) << CTRL_RIGHT;
 }

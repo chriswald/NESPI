@@ -11,6 +11,7 @@
 #define CTRL_DOWN   5
 #define CTRL_LEFT   6
 #define CTRL_RIGHT  7
+#define CTRL_BTNS   8
 
 #define PLAYER_1    0
 #define PLAYER_2    1

@@ -43,6 +43,7 @@ void getControllerState(uint8_t player)
     CTRL[player].buttons |= digitalRead(CTRL[player].DATA) << CTRL_LEFT;
     pulsePin(CTRL[player].CLK);
     CTRL[player].buttons |= digitalRead(CTRL[player].DATA) << CTRL_RIGHT;
+    CTRL[player].buttons = ~CTRL[player].buttons;
 }
 
 void pulsePin(uint8_t pin)

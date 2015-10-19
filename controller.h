@@ -15,6 +15,7 @@
 
 #define PLAYER_1    0
 #define PLAYER_2    1
+#define NUM_PLAYERS 2
 
 typedef struct
 {

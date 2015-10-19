@@ -11,11 +11,24 @@ int main()
 
    while (true)
    {
-      uint8_t old = CTRL[PLAYER_0].buttons;
-      getControllerState(PLAYER_0);
-      
-      if (old & 1 == 0 && CTRL[PLAYER_0].buttons & 1 == 1)
-	 printf("Pressed A");
+      for (int i = 0; i < NUM_PLAYERS; i ++)
+      {
+	 uint8_t old = CTRL[i].buttons;
+	 getControllerState(i);
+	 uint8_t new = CTRL[i].buttons;
+	 
+	 for (int j = 0; j < CTRL_BTNS; j ++)
+	 {
+	    if ((old & (1 << j)) && !(new & (1 << j)))
+	    {
+	       printf("A%d released\n", j);
+	    } 
+	    else if ((new & (1 << j)) && !(old & (1 << j)))
+	    {
+	       printf("A%d pressed\n", j);
+	    }
+	 }
+      }
    }
 
    return 0;

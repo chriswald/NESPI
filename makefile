@@ -1,2 +1,2 @@
 all:
-	gcc -o nespi *.c -l wiringPi
+	gcc -std=c99 -o nespi *.c -l wiringPi

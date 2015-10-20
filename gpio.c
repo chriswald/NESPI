@@ -4,10 +4,17 @@
 #include <stdbool.h>
 
 #include "controller.h"
+#include "keys.h"
+#include "config.h"
 
 int main()
 {
    initControllers();
+   initKeys();
+   initConfig();
+
+   getControllerState(PLAYER_1);
+   getControllerState(PLAYER_2);
 
    while (true)
    {
@@ -22,10 +29,12 @@ int main()
 	    if ((old & (1 << j)) && !(new & (1 << j)))
 	    {
 	       printf("A%d released\n", j);
+	       //keyUp(j);
 	    } 
 	    else if ((new & (1 << j)) && !(old & (1 << j)))
 	    {
 	       printf("A%d pressed\n", j);
+	       //keyDown(j);
 	    }
 	 }
       }

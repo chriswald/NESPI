@@ -4,6 +4,6 @@
 #include <stdint.h>
 
 void initConfig();
-const char* keyFromButton(uint8_t button);
+uint32_t keyFromButton(uint8_t button);
 
 #endif // __CONFIG_H__

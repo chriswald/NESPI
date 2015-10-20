@@ -3,43 +3,33 @@
 #include "controller.h"
 
 #include <stdio.h>
+#include <stdint.h>
 
-char buttonMapping[CTRL_BTNS][10];
+uint32_t buttonMapping[CTRL_BTNS];
 
 void setupDefaultConfig();
 
 void initConfig()
 {
-    FILE* fp;
-    fp = fopen("keys.config", "r");
-
-    if (fp == NULL)
-    {
-        setupDefaultConfig();
-    }
-    else
-    {
-        if (fscanf(fp, "%s %s %s %s %s %s %s %s", buttonMapping[0], 
-                    buttonMapping[1], buttonMapping[2], buttonMapping[3],
-                    buttonMapping[4], buttonMapping[5], buttonMapping[6],
-                    buttonMapping[7]) != 8)
-        {
-            setupDefaultConfig();
-        }
-    }
-
-    fclose(fp);
+   setupDefaultConfig();
 }
 
 void setupDefaultConfig()
 {
-
+   buttonMapping[0] = XK_K;
+   buttonMapping[1] = XK_J;
+   buttonMapping[2] = XK_space;
+   buttonMapping[3] = XK_Return;
+   buttonMapping[4] = XK_W;
+   buttonMapping[5] = XK_S;
+   buttonMapping[6] = XK_A;
+   buttonMapping[7] = XK_D;
 }
 
-const char* keyFromButton(uint8_t button)
+uint32_t keyFromButton(uint8_t button)
 {
     if (button < CTRL_BTNS)
         return buttonMapping[button];
     else
-        return "";
+        return 0;
 }

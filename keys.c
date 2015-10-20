@@ -1,19 +1,27 @@
 #include "keys.h"
-#include <xdo.h>
+#include "config.h"
+#include <stdbool.h>
+#include <X11/Xlib.h>
+#include <X11/keysym.h>
+#include <X11/extensions/XTest.h>
 
-xdo_t* x;
+Display* display;
 
 void initKeys()
 {
-	x = xdo_new(":0.0");
+   display = XOpenDisplay(NULL);
 }
 
-void keyDown(const char* keyseq)
+void keyDown(uint32_t button)
 {
-	xdo_keysequence_down(x, CURRENTWINDOW, keyseq, 0);
+   unsigned int keycode;
+   keycode = XKeysymToKeycode(display, keyFromButton(button));
+   XTestFakeKeyEvent(display, keycode, true, 0);
 }
 
-void keyUp(const char* keyseq)
+void keyUp(uint32_t button)
 {
-	xdo_keysequence_up(x, CURRENTWINDOW, keyseq, 0);
+   unsigned int keycode;
+   keycode = XKeysymToKeycode(display, keyFromButton(button));
+   XTestFakeKeyEvent(display, keycode, false, 0);
 }
